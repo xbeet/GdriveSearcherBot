@@ -35,7 +35,8 @@ async def search(_, message: Message):
     query = message.text.split(' ',maxsplit=1)[1]
     m = await message.reply_text("**Searching....**")
     data = drive.drive_list(query)
-    user_id = message.from_user.id
+    # Anon Admin or That User!
+    user_id = (message.from_user.id or 1087968824)
     
     results = len(data)
     i = 0
