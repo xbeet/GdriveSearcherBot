@@ -1,7 +1,10 @@
-BOT_TOKEN = "1629027959:AAEaTw4s2qaAL3mYP3fQRnE"
-RESULTS_COUNT = 4  # NOTE Number of results to show, 4 is better
-SUDO_CHATS_ID = [-1001485393652, -1005456463651]
+import os
 
+BOT_TOKEN = os.envrion.get("BOT_TOKEN", "bot_token")
+API_ID = int(os.envrion.get("API_ID", 12345678))
+API_HASH = os.envrion.get("API_HASH", "hash")
+RESULTS_COUNT = int(os.envrion.get("RESULTS_COUNT", 4)  # NOTE Number of results to show, 4 is better
+SUDO_CHATS_ID = list(set(int(x) for x in os.environ.get("SUDO_CHATS_ID", "-1001485393652 -1005456463651").split()))
 
 DRIVE_NAME = [
     "Root",  # folder 1 name
