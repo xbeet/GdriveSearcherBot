@@ -30,14 +30,16 @@ async def help_command(_, message):
 async def search(_, message: Message):
     global i, m, data, user_id
     if len(message.command) < 2:
-      await message.reply_text('/seach Filename')
-      return
+        await message.reply_text('/seach Filename')
+        return
     query = message.text.split(' ',maxsplit=1)[1]
     m = await message.reply_text("**Searching....**")
     data = drive.drive_list(query)
     # Anon Admin or That User!
-    user_id = (message.from_user.id or 1087968824)
-    
+    user_id = 1087968824
+    if message.from_user:
+        user_id = message.from_user.id
+
     results = len(data)
     i = 0
     i = i + RESULTS_COUNT
