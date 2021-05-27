@@ -90,6 +90,7 @@ async def previous_callbacc(_, CallbackQuery: cbq):
     global i, ii, m, data, user_id
     if user_id != CallbackQuery.from_user.id:
         await CallbackQuery.answer("Ser, You are not allowed to access other's Search Results!", show_alert=True)
+        return
     if i < RESULTS_COUNT:
         await CallbackQuery.answer(
             "Already at 1st page, Can't go back.",
@@ -143,6 +144,7 @@ async def next_callbacc(_, cb: cbq):
     global i, ii, m, data, user_id
     if user_id != cb.from_user.id:
         await cb.answer("Ser, You are not allowed to access other's Search Results!", show_alert=True)
+        return
     ii = i
     i += RESULTS_COUNT
     text = ""
@@ -190,6 +192,7 @@ async def close_cb(_, cb: cbq):
     global user_id
     if user_id != cb.from_user.id:
         await cb.answer("Ser, You are not allowed to access other's Search Results!", show_alert=True)
+        return
     await cb.message.delete(True)
 
 
