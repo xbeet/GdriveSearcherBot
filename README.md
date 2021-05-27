@@ -6,8 +6,10 @@
 
 <img src="https://i.imgur.com/MxrswfJ.png" width="370" align="right">
 
+### Deploy to Heroku:
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/AbirHasan2005/GdriveSearcherBot)
 
-### Installation
+### Deploy Locally:
 
 ##### Getting Google OAuth API credential file
 - Visit the [Google Cloud Console](https://console.developers.google.com/apis/credentials)
