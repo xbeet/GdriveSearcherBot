@@ -3,7 +3,38 @@
 Moded by [@AbirHasan2005](https://github.com/AbirHasan2005).**
 
 ### Deploy to Heroku:
+#### Via Button:
+- [Import it as Private](https://github.com/new/import).
+- [Follow Steps for Getting Google Cloud Console Project's `credentials.json` File](https://github.com/AbirHasan2005/GdriveSearcherBot#getting-google-oauth-api-credential-file).
+- Send that `credentials.json` file to [@TokenPickle_Bot](https://t.me/TokenPickle_Bot) & get your `token.pickle` file.
+- Upload that `token.pickle` file to your **Private** Imported GitHub Repository.
+- Change Heroku Deploy Template Link with your **Private** Imported GitHub Repository Link.
+- Press **Deploy to Heroku** Button.
+
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/AbirHasan2005/GdriveSearcherBot)
+
+#### Via Heroku CLI:
+##### Install Heroku on Linux:
+```shell
+apt install npm -y
+npm i -g heroku
+```
+##### Login to Heroku CLI:
+```shell
+heroku login
+heroku create app_name
+```
+##### Push to Heroku
+Follow Steps for getting `credentials.json` file: [Here](https://github.com/AbirHasan2005/GdriveSearcherBot#getting-google-oauth-api-credential-file)
+```shell
+git clone https://github.com/AbirHasan2005/GdriveSearcherBot
+cd GdriveSearcherBot
+python3 generate_drive_token.py
+git add .
+git commit -am "Pushing to Heroku"
+heroku git:remote -a app_name
+git push heroku
+```
 
 ### Deploy Locally:
 ##### Getting Google OAuth API credential file:
@@ -21,7 +52,6 @@ Moded by [@AbirHasan2005](https://github.com/AbirHasan2005).**
 pip3 install -U pip
 pip3 install -U -r requirements.txt
 python3 generate_drive_token.py
-cp sample_config.py config.py
 ```
 - Edit **config.py** with your own values
 - Run  ```python3 main.py```  to start the bot.
