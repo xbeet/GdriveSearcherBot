@@ -1,5 +1,6 @@
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import CallbackQuery as cbq
 from pyrogram.errors.exceptions.bad_request_400 import MessageEmpty, MessageNotModified
 from config import BOT_TOKEN, RESULTS_COUNT, SUDO_CHATS_ID
 from drive import drive
@@ -120,6 +121,9 @@ async def previous_callbacc(_, CallbackQuery):
                     text="Next   >>",
                     callback_data="next"
                 )
+            ],
+            [
+                InlineKeyboardButton("Close ⬇️", callback_data="closeMeh")
             ]
         ]
     )
@@ -162,6 +166,9 @@ async def next_callbacc(_, CallbackQuery):
                     text="Next   >>",
                     callback_data="next"
                 )
+            ],
+            [
+                InlineKeyboardButton("Close ⬇️", callback_data="closeMeh")
             ]
         ]
     )
@@ -169,6 +176,11 @@ async def next_callbacc(_, CallbackQuery):
         await m.edit(text=text, disable_web_page_preview=True, reply_markup=keyboard)
     except (MessageEmpty, MessageNotModified):
         pass
+
+
+@app.on_callback_query(filters.regex("closeMeh"))
+async def close_cb(_, cb: cbq):
+    await cb.message.delete(True)
 
 
 app.run()
