@@ -68,7 +68,8 @@ async def search(_, message):
                         text="Next   >>",
                         callback_data="next"
                     )
-                ]
+                ],
+                [InlineKeyboardButton("Close ⬇️", callback_data="closeMeh")]
             ]
         )
         try:
