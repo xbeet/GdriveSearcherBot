@@ -1,10 +1,9 @@
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from pyrogram.types import CallbackQuery as cbq
 from pyrogram.errors.exceptions.bad_request_400 import MessageEmpty, MessageNotModified
 from config import BOT_TOKEN, RESULTS_COUNT, SUDO_CHATS_ID
 from drive import drive
-from requests import get as g
 
 app = Client(":memory:", bot_token=BOT_TOKEN, api_id=6,
              api_hash="eb06d4abfb49dc3eeb1aeb98ae0f581e")
@@ -14,6 +13,7 @@ ii = 0
 m = None
 keyboard = None
 data = None
+user_id = None
 
 
 @app.on_message(filters.command("start") & ~filters.edited & filters.chat(SUDO_CHATS_ID))
@@ -27,14 +27,15 @@ async def help_command(_, message):
 
 
 @app.on_message(filters.command("search") & ~filters.edited & filters.chat(SUDO_CHATS_ID))
-async def search(_, message):
-    global i, m, data
+async def search(_, message: Message):
+    global i, m, data, user_id
     if len(message.command) < 2:
       await message.reply_text('/seach Filename')
       return
     query = message.text.split(' ',maxsplit=1)[1]
     m = await message.reply_text("**Searching....**")
     data = drive.drive_list(query)
+    user_id = message.from_user.id
     
     results = len(data)
     i = 0
@@ -84,8 +85,10 @@ async def search(_, message):
 
 
 @app.on_callback_query(filters.regex("previous"))
-async def previous_callbacc(_, CallbackQuery):
-    global i, ii, m, data
+async def previous_callbacc(_, CallbackQuery: cbq):
+    global i, ii, m, data, user_id
+    if user_id != CallbackQuery.from_user.id:
+        await CallbackQuery.answer("Ser, You are not allowed to access other's Search Results!", show_alert=True)
     if i < RESULTS_COUNT:
         await CallbackQuery.answer(
             "Already at 1st page, Can't go back.",
@@ -135,8 +138,10 @@ async def previous_callbacc(_, CallbackQuery):
 
 
 @app.on_callback_query(filters.regex("next"))
-async def next_callbacc(_, CallbackQuery):
-    global i, ii, m, data
+async def next_callbacc(_, cb: cbq):
+    global i, ii, m, data, user_id
+    if user_id != cb.from_user.id:
+        await cb.answer("Ser, You are not allowed to access other's Search Results!", show_alert=True)
     ii = i
     i += RESULTS_COUNT
     text = ""
@@ -181,6 +186,9 @@ async def next_callbacc(_, CallbackQuery):
 
 @app.on_callback_query(filters.regex("closeMeh"))
 async def close_cb(_, cb: cbq):
+    global user_id
+    if user_id != cb.from_user.id:
+        await cb.answer("Ser, You are not allowed to access other's Search Results!", show_alert=True)
     await cb.message.delete(True)
 
 
