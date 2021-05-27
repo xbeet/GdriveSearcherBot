@@ -2,11 +2,11 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from pyrogram.types import CallbackQuery as cbq
 from pyrogram.errors.exceptions.bad_request_400 import MessageEmpty, MessageNotModified
-from sample_config import BOT_TOKEN, RESULTS_COUNT, SUDO_CHATS_ID
+from sample_config import BOT_TOKEN, RESULTS_COUNT, SUDO_CHATS_ID, API_ID, API_HASH
 from drive import drive
 
-app = Client(":memory:", bot_token=BOT_TOKEN, api_id=6,
-             api_hash="eb06d4abfb49dc3eeb1aeb98ae0f581e")
+app = Client(":memory:", bot_token=BOT_TOKEN, api_id=API_ID,
+             api_hash=API_HASH)
 
 i = 0
 ii = 0
